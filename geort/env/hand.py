@@ -89,8 +89,13 @@ class HandKinematicModel:
         self.joint_names = joint_names
         self.user_idx_to_sim_idx = get_active_joint_indices(self.hand, joint_names)
         print("User-to-Sim Joint", self.user_idx_to_sim_idx)
-        self.sim_idx_to_user_idx = [self.user_idx_to_sim_idx.index(i) for i in range(len(self.user_idx_to_sim_idx))]
+        # self.sim_idx_to_user_idx = [self.user_idx_to_sim_idx.index(i) for i in range(len(self.user_idx_to_sim_idx))]
+        max_sim_idx = max(self.user_idx_to_sim_idx)
+        self.sim_idx_to_user_idx = [-1] * (max_sim_idx + 1)
+        for user_idx, sim_idx in enumerate(self.user_idx_to_sim_idx):
+            self.sim_idx_to_user_idx[sim_idx] = user_idx
         print("Sim-to-User Joint", self.sim_idx_to_user_idx)
+        print( len(self.sim_idx_to_user_idx))
 
         self.joint_lower_limit = np.array([l[0][0] for l in all_limits])  # this is in user specified "joint_name" order
         self.joint_upper_limit = np.array([l[0][1] for l in all_limits])  # this is in user specified "joint_name" order
