@@ -89,5 +89,5 @@ class IKModel(nn.Module):
         out = torch.zeros((batch_size, self.n_total_joint)).to(x.device)
         for i in range(n_points):
             joint = self.nets[i](x[:, i])
-            out[:, self.keypoint_joints[i]] = joint 
+            out[:, self.keypoint_joints[i]] = joint
         return out 

@@ -151,7 +151,7 @@ python ./geort/mocap/replay_evaluation.py -hand allegro_right -ckpt_tag YOUR_CKP
 ```
 For instance, if we have ``human.npy`` in the ``data`` folder
 ```
-python ./geort/mocap/replay_evaluation.py -hand allegro_right -ckpt_tag YOUR_CKPT -data human
+python ./geort/mocap/replay_evaluation.py -hand botyard_left -ckpt_tag botyard_left_2025-06-21_17-37-11_geort_1 -data human_data
 ```
 ## Contributing
 Feel free to contribute your robot model and mocap system to the GeoRT repository!

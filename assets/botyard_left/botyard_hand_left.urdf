@@ -57,7 +57,7 @@
       </geometry>
     </collision>
   </link>
-  <joint name="FAJ3" type="revolute">
+  <joint name="FAJ3" type="fixed">
     <origin rpy="0 0 1.5708" xyz="0 0.028001 0.1905"/>
     <parent link="fabase"/>
     <child link="falink2"/>
@@ -113,8 +113,8 @@
       </geometry>
     </collision>
   </link>
-  <joint name="FAJ1" type="revolute">
-    <origin rpy="0 0 -1.5708" xyz="0 -0.0193 0.039"/>
+  <joint name="FAJ1" type="fixed">
+    <origin rpy="0 0 0" xyz="0 -0.0193 0.039"/>
     <parent link="falink1"/>
     <child link="pmbase"/>
     <axis xyz="-1 0 0"/>
@@ -667,7 +667,7 @@
       </geometry>
     </collision>
   </link>
-  <joint name="LFJ5" type="revolute">
+  <joint name="LFJ5" type="fixed">
     <origin rpy="0 -1.0472 0" xyz="-0.025779 0 0.032848"/>
     <parent link="palm"/>
     <child link="lfpalm"/>

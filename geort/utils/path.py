@@ -29,13 +29,21 @@ def get_human_data_output_path(human_data):
     current_dir = Path(os.path.dirname(os.path.realpath(__file__)))
     return (current_dir / ".." / ".." / "data" / human_data).resolve()
 
+# def get_human_data(name):
+#     data_root = Path(get_data_root())
+#     all_data_names = os.listdir(data_root)
+#     for data_name in all_data_names:
+#         if name in data_name:
+#             return data_root / data_name
 def get_human_data(name):
     data_root = Path(get_data_root())
-    all_data_names = os.listdir(data_root)
-    for data_name in all_data_names:
-        if name in data_name:
-            return data_root / data_name
-
+    # 如果没有后缀，自动加上 .npy
+    if not name.endswith('.npy'):
+        name = name + '.npy'
+    file_path = data_root / name
+    if file_path.exists():
+        return file_path
+    return None
 
 if __name__ == '__main__':
     print(get_package_root())

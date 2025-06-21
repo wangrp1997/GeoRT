@@ -103,9 +103,8 @@ class GeoRTTrainer:
             keypoint_joint = []
             for joint in info["joint"]:
                 keypoint_joint.append(joint_order.index(joint))
-
+        
             keypoint_joints.append(keypoint_joint)
-
         out = {
             "link": keypoint_links,
             "offset": keypoint_offsets,

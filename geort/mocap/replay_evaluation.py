@@ -35,6 +35,13 @@ def main():
 
         result = mocap.get()
 
+        # 实时读取所有关节（包括固定和可动）
+        # active_joints = hand.hand.get_active_joints()
+        # qpos = hand.hand.get_qpos()
+        # for joint, angle in zip(active_joints, qpos):
+        #     print(f'关节: {joint.get_name()}, 角度: {angle}')
+        # print("\n\n")
+
         if result['status'] == 'recording' and result["result"] is not None:
             qpos = model.forward(result["result"])
             hand.set_qpos_target(qpos)
