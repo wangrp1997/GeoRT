@@ -40,21 +40,30 @@ class HandKinematicModel:
             engine = sapien.Engine()
             
             if render:
-                renderer = sapien.VulkanRenderer()  
-                engine.set_renderer(renderer)
+                # 不显式创建渲染器，让 SAPIEN 自动处理
+                # renderer = sapien.SapienRenderer()
+                # engine.set_renderer(renderer)
                 print("Enable Render Mode.")
+                renderer = None  # 让 SAPIEN 自动选择渲染器
             else:
                 renderer = None 
             scene_config = sapien.SceneConfig()
-            scene_config.default_dynamic_friction = 1.0
-            scene_config.default_static_friction = 1.0
-            scene_config.default_restitution = 0.00
-            scene_config.contact_offset = 0.02
-            scene_config.enable_pcm = False
-            scene_config.solver_iterations = 25
-            scene_config.solver_velocity_iterations = 1
+            # SAPIEN 3.0.0b0 中很多属性都改变了，只保留最基本的
+            # 如果这些属性也不存在，我们可以完全移除场景配置
+            try:
+                scene_config.default_dynamic_friction = 1.0
+                scene_config.default_static_friction = 1.0
+                scene_config.default_restitution = 0.00
+                scene_config.contact_offset = 0.02
+                scene_config.enable_pcm = False
+                scene_config.solver_iterations = 25
+                scene_config.solver_velocity_iterations = 1
+            except AttributeError:
+                # 如果属性不存在，使用默认配置
+                print("使用默认场景配置")
+                pass
             scene = engine.create_scene(scene_config)  
-            self.engine = engine 
+            self.engine = engine
 
         self.scene = scene 
         self.renderer = renderer 
@@ -191,7 +200,8 @@ class HandViewerEnv:
         scene.add_directional_light([0, 1, -1], [0.5, 0.5, 0.5], shadow=True)
         scene.add_ground(altitude=0) 
 
-        viewer = Viewer(model.get_renderer())
+        # 直接创建 Viewer，不依赖 get_renderer()
+        viewer = Viewer()
         viewer.set_scene(scene) 
         viewer.window.set_camera_position([0.1550926,-0.1623763, 0.7064089])
         viewer.window.set_camera_rotation([0.8716827, 0.3260138, 0.12817779, 0.3427167])
@@ -199,7 +209,7 @@ class HandViewerEnv:
         
         self.model = model
         self.scene = scene 
-        self.viewer = viewer 
+        self.viewer = viewer
 
     def update(self):
         self.scene.step()
